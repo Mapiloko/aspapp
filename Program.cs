@@ -19,7 +19,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddScoped<IRepository, InMemoryRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // builder.Services.AddSingleton<IRepository, InMemoryRepository>();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using AspApp.Controllers.Models;
 using AspApp.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,8 +17,9 @@ namespace AspApp.Data
 
         }
 
-        public DbSet<Genre> Genres {get; set;}
-        public DbSet<Actor> Actors {get; set;}
+        public DbSet<Department> Departments {get; set;}
+        public DbSet<Admin> AdminTable {get; set;}
+        public DbSet<Employee> Employees {get; set;}
         
     }
 }

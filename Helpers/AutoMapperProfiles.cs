@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AspApp.Controllers.Models;
-using AspApp.DTO.Genre;
-using AspApp.DTO.Actor;
+using AspApp.DTO.Employee;
+using AspApp.DTO.Department;
 using AspApp.Models;
 using AutoMapper;
 
@@ -14,10 +13,10 @@ namespace AspApp.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<GenreDto,Genre>().ReverseMap();
-            CreateMap<GenreCreationDto,Genre>();
-            CreateMap<ActorDto,Actor>().ReverseMap();
-            CreateMap<ActorCreationDto,Actor>();
+            CreateMap<EmployeeDto,Employee>().ReverseMap();
+            CreateMap<EmployeeCreationDto,Employee>();
+            CreateMap<DepartmentDto,Department>().ReverseMap();
+            CreateMap<DepartmentCreationDto,Department>();
         }        
     }
 }
