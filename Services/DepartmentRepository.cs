@@ -11,7 +11,6 @@ namespace AspApp.Services
 {
     public class DepartmentRepository: IDepartmentRepository
     {
-        private List<Department> _department;
         private readonly DatabaseContext _context;
 
 
@@ -33,10 +32,16 @@ namespace AspApp.Services
 
         public async Task<Department> AddDepartment(Department department)
         {
+            department.Status = "Active";
             _context.Add(department);
             await _context.SaveChangesAsync();
 
             return department;
+        }
+        public async void EditDepartment(Department department)
+        {
+            _context.Entry(department).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -11,5 +11,7 @@ namespace AspApp.Interfaces
         Task<List<Department>> GetDepartments();
         Task<Department> GetDepartmentById(int id);
         Task<Department> AddDepartment(Department department);
+        void EditDepartment(Department department);
+
     }
 }

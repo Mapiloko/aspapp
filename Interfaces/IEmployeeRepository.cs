@@ -11,5 +11,6 @@ namespace AspApp.Interfaces
         Task<List<Employee>> GetEmployees();
         Task<Employee> GetEmployeeById(int id);
         Task<Employee> AddEmployee(Employee employee);
+        void EditEmployee(Employee employee);
     }
 }

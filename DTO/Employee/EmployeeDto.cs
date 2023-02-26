@@ -13,9 +13,9 @@ namespace AspApp.DTO.Employee
 
         public string? Telephone {get; set;}
         public string? Email {get; set;}
-        public int Manager {get; set;} 
+        public Boolean IsManager {get; set;}  
+        public int ManagerId {get; set;} 
         public string? Status {get; set;}
-        public string? Role {get; set;} 
 
     }
 }

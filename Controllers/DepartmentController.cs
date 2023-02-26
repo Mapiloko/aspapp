@@ -63,12 +63,11 @@ namespace AspApp.Controllers
          [HttpPut("{id:int}")]
          public ActionResult Put(int id, [FromBody] DepartmentCreationDto genreCreationDto)
          {
-            // var department = _mapper.Map<Department>(genreCreationDto);
-            // department.Id = id;
+            var department = _mapper.Map<Department>(genreCreationDto);
+            department.Id = id;
 
-            // _context.Entry(department).State = EntityState.Modified;
-
-            // await _context.SaveChangesAsync();
+            _repo.EditDepartment(department);
+            
             return NoContent();
          }
 

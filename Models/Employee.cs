@@ -19,15 +19,17 @@ namespace AspApp.Models
         [Phone]
         [Required]
         [RegularExpression(@"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$")]
-        public string? telephone {get; set;}
+        public string? Telephone {get; set;}
         [Required]
         [EmailAddress]
         public string? Email {get; set;}
-        public int Manager {get; set;} 
+        [Required]
+        public int? ManagerId {get; set;} 
+        [Required]
+        public Boolean IsManager {get; set;} 
         [Required]
         public string? Status {get; set;} 
         [Required]
-        public string? Role {get; set;} 
         public string? Password {get; set;} 
     }
 }

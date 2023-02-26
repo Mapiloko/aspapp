@@ -9,24 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    
-builder.Services.AddCors(options => 
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        var frontend_url = builder.Configuration.GetValue<string>("frontend_url");
-        policy.WithOrigins(frontend_url).AllowAnyMethod().AllowAnyHeader();
-    });
-});
+
+
+builder.Services.AddCors();
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-// builder.Services.AddSingleton<IRepository, InMemoryRepository>();
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -40,7 +32,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors(options=>{
+    options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+});
 app.UseAuthentication();
 
 app.UseAuthorization();

@@ -59,13 +59,12 @@ namespace AspApp.Controllers
          [HttpPut("{id:int}")]
          public ActionResult Put(int id, [FromBody] EmployeeCreationDto employeeCreationDto)
          {
-            // var employee = _mapper.Map<Employee>(employeeCreationDto);
-            // employee.Id = id;
+            var employee = _mapper.Map<Employee>(employeeCreationDto);
+            employee.Id = id;
 
-            // _context.Entry(employee).State = EntityState.Modified;
-
-            // await _context.SaveChangesAsync();
+            _repo.EditEmployee(employee);
             return NoContent();
+
          }
 
          [HttpDelete("{id:int}")]

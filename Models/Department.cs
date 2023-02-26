@@ -10,10 +10,12 @@ namespace AspApp.Models
     {
         public int Id {get; set;}
         [Required]
-        [StringLength(2)]
+        [StringLength(50)]
         public string? Name {get; set;}
         [Required]
         public string? Status {get; set;}
+        [Required]
+        public int ManagerId {get; set;}
 
     }
 }

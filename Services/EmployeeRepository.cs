@@ -34,10 +34,16 @@ namespace AspApp.Services
         public async Task<Employee> AddEmployee(Employee employee)
         {
             employee.Password = "Password123#";
+            employee.Status = "Active";
             _context.Add(employee);
             await _context.SaveChangesAsync();
 
             return employee;
+        }
+        public async void EditEmployee(Employee employee)
+        {
+            _context.Entry(employee).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

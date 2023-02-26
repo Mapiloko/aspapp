@@ -10,5 +10,7 @@ namespace AspApp.DTO.Department
     {
         public string? Name {get; set;}
         public string? Status {get; set;}
+        public int ManagerId {get; set;}
+
     }
 }
