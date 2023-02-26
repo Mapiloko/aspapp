@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using aspapp.DTO;
 using AspApp.Data;
 using AspApp.DTO.Employee;
 using AspApp.Interfaces;
@@ -57,30 +58,28 @@ namespace AspApp.Controllers
          }
 
          [HttpPut("{id:int}")]
-         public ActionResult Put(int id, [FromBody] EmployeeCreationDto employeeCreationDto)
+         public async Task<ActionResult> Put(int id, [FromBody] EmployeeCreationDto employeeCreationDto)
          {
-            var employee = _mapper.Map<Employee>(employeeCreationDto);
-            employee.Id = id;
-
-            _repo.EditEmployee(employee);
+            var employee  = await _repo.EditEmployee(employeeCreationDto, id);
+            if(employee == null)
+            {
+                return NotFound();
+            }
             return NoContent();
 
          }
 
-         [HttpDelete("{id:int}")]
-         public ActionResult Delete(int id)
+         [HttpPut("status/{id:int}")]
+         public async Task<ActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
-            // var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
-
-            // if(employee == null)
-            // {
-            //     return NotFound();
-            // }
-            // _context.Remove(employee);
-            // await _context.SaveChangesAsync();
+            var employee  = await _repo.ChangeStatus(statusEditDTO, id);
+            if(employee == null)
+            {
+                return NotFound();
+            }
             return NoContent();
-         }
 
+         }
         
     }
 }

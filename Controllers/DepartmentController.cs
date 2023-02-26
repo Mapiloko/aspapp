@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using aspapp.DTO;
 
 namespace AspApp.Controllers
 {
@@ -61,27 +62,24 @@ namespace AspApp.Controllers
          }
 
          [HttpPut("{id:int}")]
-         public ActionResult Put(int id, [FromBody] DepartmentCreationDto genreCreationDto)
+         public async Task<ActionResult> Put(int id, [FromBody] DepartmentCreationDto departmentCreationDto)
          {
-            var department = _mapper.Map<Department>(genreCreationDto);
-            department.Id = id;
-
-            _repo.EditDepartment(department);
-            
+            var department  = await _repo.EditDepartment(departmentCreationDto, id);
+            if(department == null)
+            {
+                return NotFound();
+            }
             return NoContent();
          }
 
-         [HttpDelete("{id:int}")]
-         public ActionResult Delete(int id)
+         [HttpPut("status/{id:int}")]
+         public async Task<ActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
-            // var department = await _context.Departments.FirstOrDefaultAsync(x => x.Id == id);
-
-            // if(department == null)
-            // {
-            //     return NotFound();
-            // }
-            // _context.Remove(department);
-            // await _context.SaveChangesAsync();
+            var department  = await _repo.ChangeStatus(statusEditDTO, id);
+            if(department == null)
+            {
+                return NotFound();
+            }
             return NoContent();
          }
 

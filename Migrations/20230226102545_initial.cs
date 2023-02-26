@@ -67,12 +67,24 @@ namespace AspApp.Migrations
                 columns: new[] { "Id", "ManagerId", "Name", "Status" },
                 values: new object[,]
                 {
-                    { 1, 3, "department1", "Active" },
-                    { 2, 3, "department2", "Inactive" },
-                    { 3, 4, "department3", "Inactive" },
-                    { 4, 4, "department4", "Inactive" },
-                    { 5, 3, "department5", "Active" },
-                    { 6, 4, "department6", "Active" }
+                    { 1, 3, "dpmt1", "Active" },
+                    { 2, 3, "dpmt2", "Inactive" },
+                    { 3, 4, "dpmt3", "Inactive" },
+                    { 5, 3, "dpmt5", "Active" },
+                    { 6, 4, "dpmt6", "Active" },
+                    { 7, 4, "dpmt7", "Inactive" },
+                    { 8, 10, "dpmt8", "Active" },
+                    { 9, 11, "dpmt9", "Inactive" },
+                    { 10, 11, "dpmt10", "Inactive" },
+                    { 11, 11, "dpmt11", "Active" },
+                    { 12, 10, "dpmt12", "Active" },
+                    { 13, 10, "dpmt13", "Inactive" },
+                    { 14, 17, "dpmt14", "Active" },
+                    { 15, 17, "dpmt15", "Inactive" },
+                    { 16, 17, "dpmt16", "Inactive" },
+                    { 17, 18, "dpmt17", "Active" },
+                    { 18, 18, "dpmt18", "Active" },
+                    { 19, 18, "dpmt19", "Inactive" }
                 });
 
             migrationBuilder.InsertData(
@@ -86,7 +98,21 @@ namespace AspApp.Migrations
                     { 4, "email3@gmail.com", "Lucky", true, "Dube", 0, "Password123#", "Inactive", "4456789002" },
                     { 5, "email4@gmail.com", "Raymond", false, "Reddd", 4, "Password123#", "Active", "4456789002" },
                     { 6, "email5@gmail.com", "David", false, "Ricks", 4, "Password123#", "Inactive", "4456789002" },
-                    { 7, "email6@gmail.com", "Riri", false, "Paris", 3, "Password123#", "Active", "4456789002" }
+                    { 7, "email6@gmail.com", "Riri", false, "Paris", 10, "Password123#", "Active", "4456789002" },
+                    { 8, "email1@ggmail.com", "Thandeka", false, "Keeper", 10, "Password123#", "Active", "4456789002" },
+                    { 9, "email2@gmail.com", "Pro", false, "Steve", 10, "Password123#", "Inactive", "4456789002" },
+                    { 10, "email2@gmail.com", "Smith", true, "Walker", 0, "Password123#", "Active", "4456789002" },
+                    { 11, "email3@gmail.com", "Ompha", true, "Fortunate", 0, "Password123#", "Inactive", "4456789002" },
+                    { 12, "email4@gmail.com", "Raymond", false, "Reddd", 11, "Password123#", "Active", "4456789002" },
+                    { 13, "email5@gmail.com", "Milly", false, "Thwala", 11, "Password123#", "Inactive", "4456789002" },
+                    { 14, "email6@gmail.com", "Selunathi", false, "Muzex", 17, "Password123#", "Active", "4456789002" },
+                    { 15, "email1@ggmail.com", "Phindile", false, "Sendisoa", 17, "Password123#", "Active", "4456789002" },
+                    { 16, "email2@gmail.com", "Mjeja", false, "Revent", 17, "Password123#", "Inactive", "4456789002" },
+                    { 17, "email2@gmail.com", "Letor", true, "Izzu", 0, "Password123#", "Active", "4456789002" },
+                    { 18, "email3@gmail.com", "Nikita", true, "Dudu", 0, "Password123#", "Inactive", "4456789002" },
+                    { 19, "email4@gmail.com", "Phase", false, "Way", 18, "Password123#", "Active", "4456789002" },
+                    { 20, "email5@gmail.com", "Rose", false, "Pink", 18, "Password123#", "Inactive", "4456789002" },
+                    { 21, "email6@gmail.com", "Khanya", false, "Phonm", 18, "Password123#", "Active", "4456789002" }
                 });
         }
 

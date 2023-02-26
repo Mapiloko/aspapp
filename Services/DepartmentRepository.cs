@@ -6,15 +6,16 @@ using AspApp.Models;
 using AspApp.Interfaces;
 using AspApp.Data;
 using Microsoft.EntityFrameworkCore;
+using AspApp.DTO.Department;
+using AutoMapper;
+using aspapp.DTO;
 
 namespace AspApp.Services
 {
     public class DepartmentRepository: IDepartmentRepository
     {
         private readonly DatabaseContext _context;
-
-
-        public DepartmentRepository(DatabaseContext context)
+        public DepartmentRepository(DatabaseContext context )
         {
             _context = context;
         }
@@ -38,10 +39,30 @@ namespace AspApp.Services
 
             return department;
         }
-        public async void EditDepartment(Department department)
+        public async Task<Department> EditDepartment(DepartmentCreationDto departmentCreationDto, int id)
         {
-            _context.Entry(department).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var department =  await _context.Departments.FirstOrDefaultAsync(x => x.Id == id);
+            if(department != null)
+            {
+                department.Name = departmentCreationDto.Name;
+                department.ManagerId = departmentCreationDto.ManagerId;
+                department.Status = departmentCreationDto.Status;
+
+                await _context.SaveChangesAsync();
+            }
+
+            return department;
+        }
+        public async Task<Department> ChangeStatus(StatusEditDTO statusEditDTO, int id)
+        {
+            var department =  await _context.Departments.FirstOrDefaultAsync(x => x.Id == id);
+            if(department != null)
+            {
+                department.Status = statusEditDTO.Status;
+                await _context.SaveChangesAsync();
+            }
+
+            return department;
         }
     }
 }

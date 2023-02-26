@@ -6,6 +6,8 @@ using AspApp.Models;
 using AspApp.Interfaces;
 using AspApp.Data;
 using Microsoft.EntityFrameworkCore;
+using AspApp.DTO.Employee;
+using aspapp.DTO;
 
 namespace AspApp.Services
 {
@@ -40,10 +42,32 @@ namespace AspApp.Services
 
             return employee;
         }
-        public async void EditEmployee(Employee employee)
+        public async Task<Employee> EditEmployee(EmployeeCreationDto employeeCreationDto, int id)
         {
-            _context.Entry(employee).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var employee =  await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+            if(employee != null)
+            {
+                employee.FirstName = employeeCreationDto.FirstName;
+                employee.LastName = employeeCreationDto.LastName;
+                employee.Email = employeeCreationDto.Email;
+                employee.Telephone = employeeCreationDto.Telephone;
+                employee.ManagerId = employeeCreationDto.ManagerId;
+                employee.Status = employeeCreationDto.Status;
+
+                await _context.SaveChangesAsync();
+            }
+            return employee;
+        }
+
+        public async Task<Employee> ChangeStatus(StatusEditDTO statusEditDTO, int id)
+        {
+            var employee =  await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+            if(employee != null)
+            {
+                employee.Status = statusEditDTO.Status;
+                await _context.SaveChangesAsync();
+            }
+            return employee;
         }
     }
 }
