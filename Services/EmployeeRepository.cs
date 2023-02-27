@@ -8,6 +8,7 @@ using AspApp.Data;
 using Microsoft.EntityFrameworkCore;
 using AspApp.DTO.Employee;
 using aspapp.DTO;
+using aspapp.DTO.Employee;
 
 namespace AspApp.Services
 {
@@ -51,7 +52,7 @@ namespace AspApp.Services
                 employee.LastName = employeeCreationDto.LastName;
                 employee.Email = employeeCreationDto.Email;
                 employee.Telephone = employeeCreationDto.Telephone;
-                employee.ManagerId = employeeCreationDto.ManagerId;
+                employee.DepartmentId = employeeCreationDto.DepartmentId;
                 employee.Status = employeeCreationDto.Status;
 
                 await _context.SaveChangesAsync();
@@ -65,6 +66,27 @@ namespace AspApp.Services
             if(employee != null)
             {
                 employee.Status = statusEditDTO.Status;
+                await _context.SaveChangesAsync();
+            }
+            return employee;
+        }
+
+        public async Task<Employee> ChangeRole(EditRoleDTO editRoleDTO, int id)
+        {
+            var employee =  await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+            if(employee != null)
+            {
+                employee.IsManager = editRoleDTO.IsManager;
+                await _context.SaveChangesAsync();
+            }
+            return employee;
+        }
+        public async Task<Employee> ChangeDepartmentManager(EditDepartmentDTO editDepartmentDto, int id)
+        {
+            var employee =  await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+            if(employee != null)
+            {
+                employee.DepartmentId = editDepartmentDto.DepartmentId;
                 await _context.SaveChangesAsync();
             }
             return employee;

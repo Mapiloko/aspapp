@@ -16,6 +16,7 @@ namespace AspApp.Models
         public string? Status {get; set;}
         [Required]
         public int ManagerId {get; set;}
+        public List<Employee>? Employees {get; set;}
 
     }
 }

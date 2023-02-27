@@ -23,6 +23,34 @@ namespace AspApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Department>().HasData(
+                new Department() { Id = 1, Name = "dpmt1", Status = "Active", ManagerId = 4},
+                new Department() { Id = 2, Name = "dpmt2", Status = "Inactive", ManagerId = 3},
+                new Department() { Id = 3, Name = "dpmt3", Status = "Inactive", ManagerId = 10},
+                new Department() { Id = 5, Name = "dpmt5", Status = "Active", ManagerId = 27},
+                new Department() { Id = 4, Name = "dpmt4", Status = "Inactive", ManagerId = 11}
+                // ,
+                // new Department() { Id = 5, Name = "dpmt5", Status = "Active", ManagerId = 3},
+                // new Department() { Id = 6, Name = "dpmt6", Status = "Active", ManagerId = 4},
+                // new Department() { Id = 7, Name = "dpmt7", Status = "Inactive", ManagerId = 4},
+                // new Department() { Id = 8, Name = "dpmt8", Status = "Active", ManagerId = 10},
+                // new Department() { Id = 9, Name = "dpmt9", Status = "Inactive", ManagerId = 11},
+                // new Department() { Id = 10, Name = "dpmt10", Status = "Inactive", ManagerId = 11},
+                // new Department() { Id = 11, Name = "dpmt11", Status = "Active", ManagerId = 11},
+                // new Department() { Id = 12, Name = "dpmt12", Status = "Active", ManagerId = 10},
+                // new Department() { Id = 13, Name = "dpmt13", Status = "Inactive", ManagerId = 10},
+                // new Department() { Id = 14, Name = "dpmt14", Status = "Active", ManagerId = 11},
+                // new Department() { Id = 15, Name = "dpmt15", Status = "Inactive", ManagerId = 11},
+                // new Department() { Id = 16, Name = "dpmt16", Status = "Inactive", ManagerId = 10},
+                // new Department() { Id = 17, Name = "dpmt17", Status = "Active", ManagerId = 3},
+                // new Department() { Id = 18, Name = "dpmt18", Status = "Active", ManagerId = 3},
+                // new Department() { Id = 19, Name = "dpmt19", Status = "Inactive", ManagerId = 4}
+            );
+
+            modelBuilder.Entity<Admin>().HasData(
+                new Admin() { Id = 1, Username = " hradmin@test.com", Password = "TestPass1234"}
+            );
+
             modelBuilder.Entity<Employee>().HasData(
                     new Employee()
                     {
@@ -32,9 +60,9 @@ namespace AspApp.Data
                         Email = "email1@ggmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 4,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 1
                     },
                     new Employee()
                     {
@@ -44,21 +72,21 @@ namespace AspApp.Data
                         Email = "email2@gmail.com",
                         Status = "Inactive",
                         Telephone = "4456789002",
-                        ManagerId = 3,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 1
                     },
                     new Employee()
                     {
                         Id = 3,
-                        FirstName = "Smith",
-                        LastName = "Walker",
+                        FirstName = "SmithE",
+                        LastName = "WalkerMozi",
                         Email = "email2@gmail.com",
-                        ManagerId = 0,
                         Status = "Active",
                         Telephone = "4456789002",
                         Password = "Password123#",
-                        IsManager = true
+                        IsManager = true,
+                        DepartmentId = 2
                     },
                     new Employee()
                     {
@@ -67,10 +95,10 @@ namespace AspApp.Data
                         LastName = "Dube",
                         Email = "email3@gmail.com",
                         Status = "Inactive",
-                        ManagerId = 0,
                         Telephone = "4456789002",
                         Password = "Password123#",
-                        IsManager = true
+                        IsManager = true,
+                        DepartmentId = 1
                     },
                     new Employee()
                     {
@@ -80,9 +108,9 @@ namespace AspApp.Data
                         Email = "email4@gmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 4,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 1
                     },
                     new Employee()
                     {
@@ -92,9 +120,9 @@ namespace AspApp.Data
                         Email = "email5@gmail.com",
                         Status = "Inactive",
                         Telephone = "4456789002",
-                        ManagerId = 4,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 2
                     },
                     new Employee()
                     {
@@ -104,9 +132,9 @@ namespace AspApp.Data
                         Email = "email6@gmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 10,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 2
                     },
                     new Employee()
                     {
@@ -116,9 +144,9 @@ namespace AspApp.Data
                         Email = "email1@ggmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 10,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 2
                     },
                     new Employee()
                     {
@@ -128,9 +156,9 @@ namespace AspApp.Data
                         Email = "email2@gmail.com",
                         Status = "Inactive",
                         Telephone = "4456789002",
-                        ManagerId = 10,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 2
                     },
                     new Employee()
                     {
@@ -138,11 +166,11 @@ namespace AspApp.Data
                         FirstName = "Smith",
                         LastName = "Walker",
                         Email = "email2@gmail.com",
-                        ManagerId = 0,
                         Status = "Active",
                         Telephone = "4456789002",
                         Password = "Password123#",
-                        IsManager = true
+                        IsManager = true,
+                        DepartmentId = 3
                     },
                     new Employee()
                     {
@@ -151,10 +179,10 @@ namespace AspApp.Data
                         LastName = "Fortunate",
                         Email = "email3@gmail.com",
                         Status = "Inactive",
-                        ManagerId = 0,
                         Telephone = "4456789002",
                         Password = "Password123#",
-                        IsManager = true
+                        IsManager = true,
+                        DepartmentId = 4
                     },
                     new Employee()
                     {
@@ -164,9 +192,9 @@ namespace AspApp.Data
                         Email = "email4@gmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 11,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false, 
+                        DepartmentId = 3
                     },
                     new Employee()
                     {
@@ -176,9 +204,9 @@ namespace AspApp.Data
                         Email = "email5@gmail.com",
                         Status = "Inactive",
                         Telephone = "4456789002",
-                        ManagerId = 11,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 3
                     },
                     new Employee()
                     {
@@ -188,9 +216,9 @@ namespace AspApp.Data
                         Email = "email6@gmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 17,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 3
                     },
                     new Employee()
                     {
@@ -200,9 +228,9 @@ namespace AspApp.Data
                         Email = "email1@ggmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 17,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 3
                     },
                     new Employee()
                     {
@@ -212,9 +240,9 @@ namespace AspApp.Data
                         Email = "email2@gmail.com",
                         Status = "Inactive",
                         Telephone = "4456789002",
-                        ManagerId = 17,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 3
                     },
                     new Employee()
                     {
@@ -222,11 +250,11 @@ namespace AspApp.Data
                         FirstName = "Letor",
                         LastName = "Izzu",
                         Email = "email2@gmail.com",
-                        ManagerId = 0,
                         Status = "Active",
                         Telephone = "4456789002",
                         Password = "Password123#",
-                        IsManager = true
+                        IsManager = false,
+                        DepartmentId = 4
                     },
                     new Employee()
                     {
@@ -235,10 +263,10 @@ namespace AspApp.Data
                         LastName = "Dudu",
                         Email = "email3@gmail.com",
                         Status = "Inactive",
-                        ManagerId = 0,
                         Telephone = "4456789002",
                         Password = "Password123#",
-                        IsManager = true
+                        IsManager = false,
+                        DepartmentId = 4
                     },
                     new Employee()
                     {
@@ -248,9 +276,9 @@ namespace AspApp.Data
                         Email = "email4@gmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 18,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 4
                     },
                     new Employee()
                     {
@@ -260,9 +288,9 @@ namespace AspApp.Data
                         Email = "email5@gmail.com",
                         Status = "Inactive",
                         Telephone = "4456789002",
-                        ManagerId = 18,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 4
                     },
                     new Employee()
                     {
@@ -272,34 +300,82 @@ namespace AspApp.Data
                         Email = "email6@gmail.com",
                         Status = "Active",
                         Telephone = "4456789002",
-                        ManagerId = 18,
                         Password = "Password123#",
-                        IsManager = false
+                        IsManager = false,
+                        DepartmentId = 4
+                    },
+                    new Employee()
+                    {
+                        Id = 22,
+                        FirstName = "Free",
+                        LastName = "Mak",
+                        Email = "email2@gmail.com",
+                        Status = "Inactive",
+                        Telephone = "4456789002",
+                        Password = "Password123#",
+                        IsManager = false,
+                        DepartmentId = 5
+                    },
+                    new Employee()
+                    {
+                        Id = 23,
+                        FirstName = "Chance ",
+                        LastName = "Bruno",
+                        Email = "email2@gmail.com",
+                        Status = "Active",
+                        Telephone = "4456789002",
+                        Password = "Password123#",
+                        IsManager = false,
+                        DepartmentId = 5
+                    },
+                    new Employee()
+                    {
+                        Id = 24,
+                        FirstName = "Tutu",
+                        LastName = "Maplo",
+                        Email = "email3@gmail.com",
+                        Status = "Inactive",
+                        Telephone = "4456789002",
+                        Password = "Password123#",
+                        IsManager = false,
+                        DepartmentId = 5
+                    },
+                    new Employee()
+                    {
+                        Id = 25,
+                        FirstName = "Today",
+                        LastName = "Santanda",
+                        Email = "email4@gmail.com",
+                        Status = "Active",
+                        Telephone = "4456789002",
+                        Password = "Password123#",
+                        IsManager = false,
+                        DepartmentId = 5
+                    },
+                    new Employee()
+                    {
+                        Id = 26,
+                        FirstName = "Acada",
+                        LastName = "Spain",
+                        Email = "email5@gmail.com",
+                        Status = "Inactive",
+                        Telephone = "4456789002",
+                        Password = "Password123#",
+                        IsManager = false,
+                        DepartmentId = 5
+                    },
+                    new Employee()
+                    {
+                        Id = 27,
+                        FirstName = "Lindi",
+                        LastName = "Phora",
+                        Email = "email6@gmail.com",
+                        Status = "Active",
+                        Telephone = "4456789002",
+                        Password = "Password123#",
+                        IsManager = true,
+                        DepartmentId = 5
                     }
-            );
-            modelBuilder.Entity<Department>().HasData(
-                new Department() { Id = 1, Name = "dpmt1", Status = "Active", ManagerId = 3},
-                new Department() { Id = 2, Name = "dpmt2", Status = "Inactive", ManagerId = 3},
-                new Department() { Id = 3, Name = "dpmt3", Status = "Inactive", ManagerId = 4},
-                new Department() { Id = 5, Name = "dpmt5", Status = "Active", ManagerId = 3},
-                new Department() { Id = 6, Name = "dpmt6", Status = "Active", ManagerId = 4},
-                new Department() { Id = 7, Name = "dpmt7", Status = "Inactive", ManagerId = 4},
-                new Department() { Id = 8, Name = "dpmt8", Status = "Active", ManagerId = 10},
-                new Department() { Id = 9, Name = "dpmt9", Status = "Inactive", ManagerId = 11},
-                new Department() { Id = 10, Name = "dpmt10", Status = "Inactive", ManagerId = 11},
-                new Department() { Id = 11, Name = "dpmt11", Status = "Active", ManagerId = 11},
-                new Department() { Id = 12, Name = "dpmt12", Status = "Active", ManagerId = 10},
-                new Department() { Id = 13, Name = "dpmt13", Status = "Inactive", ManagerId = 10},
-                new Department() { Id = 14, Name = "dpmt14", Status = "Active", ManagerId = 17},
-                new Department() { Id = 15, Name = "dpmt15", Status = "Inactive", ManagerId = 17},
-                new Department() { Id = 16, Name = "dpmt16", Status = "Inactive", ManagerId = 17},
-                new Department() { Id = 17, Name = "dpmt17", Status = "Active", ManagerId = 18},
-                new Department() { Id = 18, Name = "dpmt18", Status = "Active", ManagerId = 18},
-                new Department() { Id = 19, Name = "dpmt19", Status = "Inactive", ManagerId = 18}
-            );
-
-            modelBuilder.Entity<Admin>().HasData(
-                new Admin() { Id = 1, Username = " hradmin@test.com", Password = "TestPass1234"}
             );
 
             base.OnModelCreating(modelBuilder);

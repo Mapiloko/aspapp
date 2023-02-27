@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,7 @@ namespace AspApp.Models
 {
     public class Employee
     {
+        [Key]
         public int Id {get; set;}
         [Required]
         [StringLength(50)]
@@ -24,12 +26,13 @@ namespace AspApp.Models
         [EmailAddress]
         public string? Email {get; set;}
         [Required]
-        public int? ManagerId {get; set;} 
-        [Required]
         public Boolean IsManager {get; set;} 
         [Required]
         public string? Status {get; set;} 
         [Required]
         public string? Password {get; set;} 
+        public int DepartmentId {get; set;}
+        [ForeignKeyAttribute("DepartmentId")]
+        public Department? Department {get; set;}
     }
 }

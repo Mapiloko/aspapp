@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using aspapp.DTO;
+using aspapp.DTO.Employee;
 using AspApp.Data;
 using AspApp.DTO.Employee;
 using AspApp.Interfaces;
@@ -73,6 +74,30 @@ namespace AspApp.Controllers
          public async Task<ActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
             var employee  = await _repo.ChangeStatus(statusEditDTO, id);
+            if(employee == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
+
+         }
+
+         [HttpPut("editrole/{id:int}")]
+         public async Task<ActionResult> ChangeRole(int id, [FromBody] EditRoleDTO editRoleDTO)
+         {
+            var employee  = await _repo.ChangeRole(editRoleDTO, id);
+            if(employee == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
+
+         }
+         
+         [HttpPut("department/{id:int}")]
+         public async Task<ActionResult> ChangeDepartmentManager(int id, [FromBody] EditDepartmentDTO editDepartmentDTO)
+         {
+            var employee  = await _repo.ChangeDepartmentManager(editDepartmentDTO, id);
             if(employee == null)
             {
                 return NotFound();
