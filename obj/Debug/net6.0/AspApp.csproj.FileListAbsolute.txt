@@ -128,3 +128,4 @@ C:\Users\mapil\Videos\Tech Genious\aspapp\obj\Debug\net6.0\refint\AspApp.dll
 C:\Users\mapil\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.pdb
 C:\Users\mapil\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.genruntimeconfig.cache
 C:\Users\mapil\Videos\Tech Genious\aspapp\obj\Debug\net6.0\ref\AspApp.dll
+C:\Users\mapil\Videos\Tech Genious\aspapp\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

@@ -11,25 +11,25 @@ namespace AspApp.Models
     {
         [Key]
         public int Id {get; set;}
-        [Required]
+        [RequiredAttribute]
         [StringLength(50)]
         public string? FirstName {get; set;}
-        [Required]
+        [RequiredAttribute]
         [StringLength(50)]
         public string? LastName {get; set;}
 
         [Phone]
-        [Required]
+        [RequiredAttribute]
         [RegularExpression(@"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$")]
         public string? Telephone {get; set;}
-        [Required]
+        [RequiredAttribute]
         [EmailAddress]
         public string? Email {get; set;}
-        [Required]
+        [RequiredAttribute]
         public Boolean IsManager {get; set;} 
-        [Required]
+        [RequiredAttribute]
         public string? Status {get; set;} 
-        [Required]
+        [RequiredAttribute]
         public string? Password {get; set;} 
         public int DepartmentId {get; set;}
         [ForeignKeyAttribute("DepartmentId")]

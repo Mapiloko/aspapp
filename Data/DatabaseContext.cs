@@ -4,11 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using AspApp.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspApp.Data
 {
-    public class DatabaseContext: DbContext
+    public class DatabaseContext: IdentityDbContext
     {
         private readonly IConfiguration configuration;
         public DatabaseContext([NotNullAttribute] DbContextOptions options, IConfiguration configuration) : base (options)
