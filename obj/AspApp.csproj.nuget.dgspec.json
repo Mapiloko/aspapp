@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mapil\\Videos\\Tech Genious\\aspapp\\AspApp.csproj": {}
+    "C:\\Users\\user\\Videos\\Tech Genious\\aspapp\\AspApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mapil\\Videos\\Tech Genious\\aspapp\\AspApp.csproj": {
+    "C:\\Users\\user\\Videos\\Tech Genious\\aspapp\\AspApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mapil\\Videos\\Tech Genious\\aspapp\\AspApp.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Videos\\Tech Genious\\aspapp\\AspApp.csproj",
         "projectName": "AspApp",
-        "projectPath": "C:\\Users\\mapil\\Videos\\Tech Genious\\aspapp\\AspApp.csproj",
-        "packagesPath": "C:\\Users\\mapil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mapil\\Videos\\Tech Genious\\aspapp\\obj\\",
+        "projectPath": "C:\\Users\\user\\Videos\\Tech Genious\\aspapp\\AspApp.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Videos\\Tech Genious\\aspapp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\mapil\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -89,8 +89,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -102,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

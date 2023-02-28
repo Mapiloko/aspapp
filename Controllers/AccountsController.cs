@@ -27,6 +27,39 @@ namespace aspapp.Controllers
             _configuration = configuration;
         }
 
+         [HttpPost("create")]
+        public async Task<ActionResult<AuthenticationResponse>> Create([FromBody] UserCredentials userCredetials)
+        {
+            var user  = new IdentityUser {UserName = userCredetials.Email, Email = userCredetials.Email};
+
+            var result = await _userManager.CreateAsync(user, userCredetials.Password);
+
+            if(result.Succeded)
+            {
+                return BuildToken(userCredetials);
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCredentials userCredetials)
+        {
+            var result = await _signInManager.PasswordSignInAsync(userCredetials.Email, userCredetials.Password, isPersistent: false
+            ,lockoutOnFailure: false);
+
+            if(result.Succeded)
+            {
+                return BuildToken(userCredetials);
+            }
+            else
+            {
+                return BadRequest("Incorrect login");
+            }
+        }
+
         private AuthenticationResponse BuildToken(UserCredentials userCredetials)
         {
             var claims  = new List<Claim>()

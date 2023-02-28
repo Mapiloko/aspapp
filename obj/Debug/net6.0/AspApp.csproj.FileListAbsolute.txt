@@ -129,3 +129,13 @@ C:\Users\mapil\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.pdb
 C:\Users\mapil\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.genruntimeconfig.cache
 C:\Users\mapil\Videos\Tech Genious\aspapp\obj\Debug\net6.0\ref\AspApp.dll
 C:\Users\mapil\Videos\Tech Genious\aspapp\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.csproj.AssemblyReference.cache
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.AssemblyInfoInputs.cache
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.AssemblyInfo.cs
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.csproj.CoreCompileInputs.cache
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.dll
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\refint\AspApp.dll
+C:\Users\user\Videos\Tech Genious\aspapp\obj\Debug\net6.0\AspApp.pdb
