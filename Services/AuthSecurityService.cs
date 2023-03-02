@@ -29,28 +29,6 @@ namespace aspapp.Services
             this.roleManager = roleManager;
         }
 
-        public async Task<bool> CreateRoleAsync(IdentityRole role)
-        {
-            bool isRoleCreated = false;
-            var res = await roleManager.CreateAsync(role);
-            if (res.Succeeded)
-            {
-                isRoleCreated = true;
-            }
-            return isRoleCreated;
-        }
-
-        public async Task<List<Users>> GetUsersAsync()
-        {
-            List<Users> users = new List<Users>();
-            users = (from u in await userManager.Users.ToListAsync()
-                    select new Users()
-                    {
-                         Email = u.Email,
-                         UserName = u.UserName
-                    }).ToList();
-            return users;
-        }
         public async Task<bool> RegisterUserAsync(RegisterUser register)
         {
             bool IsCreated = false;
@@ -81,7 +59,6 @@ namespace aspapp.Services
         public async Task<bool> UpdateUser(UserUpdate updateuser)
         {
             bool IsUserUpdated = false;
-            // var user = await _userManager.FindByEmailAsync(employee_.Email);
 
             var user = await userManager.FindByEmailAsync(updateuser.UserName);
             if (user != null)
@@ -95,23 +72,6 @@ namespace aspapp.Services
             return IsUserUpdated;
         }
 
-        /// Method to Assign Role to User
-        public async Task<bool> AssignRoleToUserAsync(UserRole user)
-        {
-            bool isRoleAssigned = false;
-            var role = roleManager.FindByNameAsync(user.RoleName).Result;
-            var registeredUser = await userManager.FindByNameAsync(user.UserName);
-            if (role != null)
-            {
-               var res =  await userManager.AddToRoleAsync(registeredUser, role.Name);
-               if (res.Succeeded)
-               {
-                    isRoleAssigned = true;
-               }
-            }
-            return isRoleAssigned;
-        }
-
         /// Class to Authenticate User based on User Name
         public async Task<AuthStatus> AuthUserAsync(LoginUser inputModel)
         {
@@ -123,13 +83,10 @@ namespace aspapp.Services
             if (result.Succeeded)
             {
 
-                // Read the secret key and the expiration from the configuration 
                 var secretKey = Convert.FromBase64String(configuration["JWTCoreSettings:SecretKey"]);
                 var expiryTimeSpan = Convert.ToInt32(configuration["JWTCoreSettings:ExpiryInMinuts"]);
-                // IdentityUser user = new IdentityUser(inputModel.UserName);
                 var user = await userManager.FindByEmailAsync(inputModel.UserName);
                 var role = await userManager.GetRolesAsync(user);
-                // if user is not associated with role then log off
                 if (role.Count == 0)
                 {
                     await signInManager.SignOutAsync();
@@ -137,9 +94,7 @@ namespace aspapp.Services
                 }
                 else
                 {
-                    //read the rolename
                     roleName = role[0];
-                    // there is no third-party issuer
                     var securityTokenDescription = new SecurityTokenDescriptor()
                     {
                         Issuer = null,

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using aspapp.DTO;
 using AspApp.DTO.Employee;
+using aspapp.DTO.Utils;
 
 namespace AspApp.Controllers
 {
@@ -33,72 +34,182 @@ namespace AspApp.Controllers
 
         [HttpGet("getall")]
         [Authorize(Policy = "AdminManagerPolicy")]
-        public async Task<ActionResult<List<DepartmentDto>>> GetDepartments()
+        public async Task<IActionResult> GetDepartments()
         {
-            var department =  await _repo.GetDepartments();
-            if(department.Count == 0)
+            ResponseStatus response;
+            // response = SetResponse(200, "No content","","");
+            // return StatusCode(200, response);
+            try
             {
-                return NoContent();
+                var department =  await _repo.GetDepartments();
+                if (department.Count == 0)
+                {
+                    response = SetResponse(200, "No content","","");
+                    return StatusCode(200, response);
+                }
+                return Ok(department);
             }
-            
-            return department;
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
         }
 
         [HttpGet("getbymanager/{id:int}")]
         [Authorize(Policy = "AdminManagerPolicy")]
-        public async Task<ActionResult<EmployeeDto>> GetDepartmentByManager(int id)
+        public async Task<IActionResult> GetDepartmentByManager(int id)
         {
-            var department = await _repo.GetDepartmentManager(id);
-            if(department == null)
+            ResponseStatus response;
+            try
             {
-                return NotFound();
+                var department = await _repo.GetDepartmentManager(id);
+                if(department == null)
+                {
+                    response = SetResponse(500, "Department Not Found","","");
+                    return StatusCode(500, response);
+                }
+                return Ok(department);
             }
-            return department;
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
+
+            // var department = await _repo.GetDepartmentManager(id);
+            // if(department == null)
+            // {
+            //     return NotFound();
+            // }
+            // return department;
         }
 
         [HttpGet("getbyid/{id:int}")]
         [Authorize(Policy = "AdminManagerPolicy")]
-        public async Task<ActionResult<DepartmentDto>> GetDepartmentById(int id)
+        public async Task<IActionResult> GetDepartmentById(int id)
         {
-            var department = await _repo.GetDepartmentById(id);
-            if(department == null)
+            ResponseStatus response;
+            try
             {
-                return NotFound();
+                var department = await _repo.GetDepartmentById(id);
+                if(department == null)
+                {
+                    response = SetResponse(500, "Department Not Found","","");
+                    return StatusCode(500, response);
+                }
+                return Ok(department);
             }
-            return department;  //  _mapper.Map<DepartmentDto>(department);
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
+            
+            // var department = await _repo.GetDepartmentById(id);
+            // if(department == null)
+            // {
+            //     return NotFound();
+            // }
+            // return department;  
         }
 
         [HttpPost("create")]
         [Authorize(Policy = "AdminPolicy")]
-         public async Task<ActionResult<DepartmentDto>> Post([FromBody] DepartmentCreationDto departmentCreationDto)
+         public async Task<IActionResult> Post([FromBody] DepartmentCreationDto departmentCreationDto)
          {
-            var department = _mapper.Map<Department>(departmentCreationDto);
-            var returnDepartment =  await _repo.AddDepartment(department);
-            
-            return _mapper.Map<DepartmentDto>(returnDepartment);
+            ResponseStatus response;
+            try
+            {
+                var department = _mapper.Map<Department>(departmentCreationDto);
+                var returndpt =  await _repo.AddDepartment(department);
+                if(returndpt == null)
+                {
+                    response = SetResponse(500, "Failed to Create new Department","","");
+                    return StatusCode(500, response);
+                }
+
+                response = SetResponse(200, "Department Created","","");
+                return Ok(returndpt);
+            }
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
+
          }
 
          [HttpPut("update/{id:int}")]
-         public async Task<ActionResult> Put(int id, [FromBody] DepartmentCreationDto departmentCreationDto)
+         public async Task<IActionResult> Put(int id, [FromBody] DepartmentCreationDto departmentCreationDto)
          {
-            var department  = await _repo.EditDepartment(departmentCreationDto, id);
-            if(department == null)
+            ResponseStatus response;
+            try
             {
-                return NotFound();
+                var department  = await _repo.EditDepartment(departmentCreationDto, id);
+                if(department == null)
+                {
+                    response = SetResponse(500, "Department Not Found","","");
+                    return StatusCode(500, response);
+                }
+                response = SetResponse(200, "Department Updated","","");
+                return Ok(response);
+
             }
-            return NoContent();
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
+
+            // var department  = await _repo.EditDepartment(departmentCreationDto, id);
+            // if(department == null)
+            // {
+            //     return NotFound();
+            // }
+            // return NoContent();
          }
 
          [HttpPut("update/status/{id:int}")]
-         public async Task<ActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
+         public async Task<IActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
-            var department  = await _repo.ChangeStatus(statusEditDTO, id);
-            if(department == null)
+            ResponseStatus response;
+            try
             {
-                return NotFound();
+                var department  = await _repo.ChangeStatus(statusEditDTO, id);
+                if(department == null)
+                {
+                    response = SetResponse(500, "Department Not Found","","");
+                    return StatusCode(500, response);
+                }
+                response = SetResponse(200, "Department Status Chnaged","","");
+                return Ok(response);
             }
-            return NoContent();
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
+
+            // var department  = await _repo.ChangeStatus(statusEditDTO, id);
+            // if(department == null)
+            // {
+            //     return NotFound();
+            // }
+            // return NoContent();
          }
+
+        private ResponseStatus SetResponse(int code, string message, string token, string role)
+        {
+            ResponseStatus response = new ResponseStatus()
+            { 
+               StatusCode = code,
+               Message = message,
+               Token = token,
+               Role = role
+            };
+            return response;
+        }
 
     }
 }

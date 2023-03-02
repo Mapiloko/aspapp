@@ -38,7 +38,10 @@ namespace AspApp.Services
             foreach (var departmentDto in departmentDtos)
             {
                 EmployeeDto manager =  await GetDepartmentManager(departmentDto.Id);
-                departmentDto.Manager = manager.FirstName +" "+ manager.LastName;
+                if(manager != null)
+                    departmentDto.Manager = manager.FirstName +" "+ manager.LastName;
+                else
+                    departmentDto.Manager = "Not Assigned";
             }
             return departmentDtos;
         }
@@ -52,7 +55,10 @@ namespace AspApp.Services
             {
                 departmentDto =  _mapper.Map<DepartmentDto>(department);
                 EmployeeDto manager =  await GetDepartmentManager(departmentDto.Id);
-                departmentDto.Manager = manager.FirstName +" "+ manager.LastName;
+                if(manager != null)
+                    departmentDto.Manager = manager.FirstName +" "+ manager.LastName;
+                else
+                    departmentDto.Manager = "Not Assigned";
             }
 
             return departmentDto;

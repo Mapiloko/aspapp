@@ -12,8 +12,8 @@ using aspapp.Data;
 namespace AspApp.Migrations
 {
     [DbContext(typeof(RBSAuthDbContext))]
-    [Migration("20230301073616_securityMigrations")]
-    partial class securityMigrations
+    [Migration("20230302141132_securityMigratios")]
+    partial class securityMigratios
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

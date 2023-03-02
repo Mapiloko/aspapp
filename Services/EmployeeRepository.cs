@@ -100,16 +100,24 @@ namespace AspApp.Services
 
                 // Change previous Manager
                 var departmentEmployees =  await _context.Employees.Where(x => x.DepartmentId == employeeCreationDto.DepartmentId).ToListAsync();
-                foreach (Employee employee_ in departmentEmployees)
-                {
-                    user = await _userManager.FindByEmailAsync(employee_.Email);
-                    var roles = await _userManager.GetRolesAsync(user);
-                    if(roles[0] == "Manager" && employeeCreationDto.Role == "Manager")
+                // if(departmentEmployees.Count != 0)
+                // {
+                    foreach (Employee employee_ in departmentEmployees)
                     {
-                       var userRole = new UserRole(){ RoleName = "Employee", UserName = employee_.Email };
-                       var roleChanged = await _authSecurityService.ChangeRole(userRole);
+                        user = await _userManager.FindByEmailAsync(employee_.Email);
+                        var roles = await _userManager.GetRolesAsync(user);
+                        if(roles[0] == "Manager" && employeeCreationDto.Role == "Manager")
+                        {
+                        var userRole = new UserRole(){ RoleName = "Employee", UserName = employee_.Email };
+                        var roleChanged = await _authSecurityService.ChangeRole(userRole);
+                        }
                     }
-                }
+                // }
+                // else
+                // {
+
+                // }
+                
 
                 var employee = _mapper.Map<Employee>(employeeCreationDto);
                 employee.Status = "Active";
@@ -148,8 +156,8 @@ namespace AspApp.Services
             }
             return employee;
         }
-        
-        public async Task<Employee> ChangeDepartmentManager(EditDepartmentDTO editDepartmentDto, int id)
+
+        public async Task<Employee> ChangeEmployeeDepartment(EditDepartmentDTO editDepartmentDto, int id)
         {
             var employee =  await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
             if(employee != null)

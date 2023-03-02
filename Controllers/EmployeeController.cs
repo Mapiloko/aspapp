@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using aspapp.DTO;
 using aspapp.DTO.Employee;
+using aspapp.DTO.Utils;
 using aspapp.Services;
 using AspApp.Data;
 using AspApp.DTO.Employee;
@@ -36,76 +37,169 @@ namespace AspApp.Controllers
         [Authorize(Policy = "AdminManagerPolicy")]
         public async Task<ActionResult<List<EmployeeDto>>> GetEmployees()
         {
-            var employees =  await _repo.GetEmployees();
-            if(employees.Count == 0)
+            ResponseStatus response;
+            // response = SetResponse(200, "No content","","");
+            //         return StatusCode(200, response);
+            try
             {
-                return NoContent();
+                var employees =  await _repo.GetEmployees();
+                if(employees.Count == 0)
+                {
+                    response = SetResponse(200, "No content","","");
+                    return StatusCode(200, response);
+                }
+                return Ok(employees);
             }
-            
-            return employees;
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
         }
-        [HttpGet("getbyid")]
+
+        [HttpGet("getbyid/{id:int}")]
         [Authorize(Policy = "AdminManagerEmployeePolicy")]
-        public async Task<ActionResult<EmployeeDto>> GetEmployeeById(int id)
+        public async Task<IActionResult> GetEmployeeById(int id)
         {
-            var employee = await _repo.GetEmployeeById(id); 
-            if(employee == null)
+            ResponseStatus response;
+            try
             {
-                return NotFound();
+                var employee = await _repo.GetEmployeeById(id); 
+
+                if(employee == null)
+                {
+                    return NoContent();
+                }
+                return Ok(employee);
             }
-            return employee;
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
+
         }
 
         [HttpPost("create")]
         [Authorize(Policy = "AdminPolicy")]
-         public async Task<ActionResult<Boolean>> AddEmployee([FromBody] EmployeeCreationDto employeeCreationDto)
+         public async Task<IActionResult> AddEmployee([FromBody] EmployeeCreationDto employeeCreationDto)
          {
-            var employeeCreated =  await _repo.AddEmployee(employeeCreationDto);
-            
-            return employeeCreated;
+            ResponseStatus response;
+            try
+            {
+                var employeeCreated =  await _repo.AddEmployee(employeeCreationDto);
+
+                if(!employeeCreated)
+                {
+                    response = SetResponse(500, "Employee Creation Failed","","");
+                    return StatusCode(500, response);
+                }
+
+                response = SetResponse(200, "Employee Created","","");
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
+
          }
 
          [HttpPut("update/{id:int}")]
          [Authorize(Policy = "AdminPolicy")]
 
-         public async Task<ActionResult> Put(int id, [FromBody] EmployeeCreationDto employeeCreationDto)
+         public async Task<IActionResult> UpdateEmployee(int id, [FromBody] EmployeeCreationDto employeeCreationDto)
          {
-            var employee  = await _repo.UpdateEmployee(employeeCreationDto, id);
-            if(employee == null)
-            {
-                return NotFound();
-            }
 
-            return NoContent();
+            ResponseStatus response;
+            try
+            {
+                var employee  = await _repo.UpdateEmployee(employeeCreationDto, id);
+
+                if(employee == null)
+                {
+                    response = SetResponse(500, "Emplyee Update Failed!!","","");
+                    return StatusCode(500, response);
+                }
+
+                response = SetResponse(200, "Employee Updated Successfully","","");
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
          }
 
         [HttpPut("update/status/{id:int}")]
         [Authorize(Policy = "AdminManagerEmployeePolicy")]
 
-         public async Task<ActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
+         public async Task<IActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
-            var employee  = await _repo.ChangeStatus(statusEditDTO, id);
-            if(employee == null)
+            ResponseStatus response;
+            try
             {
-                return NotFound();
+                var employee  = await _repo.ChangeStatus(statusEditDTO, id);
+
+                if(employee == null)
+                {
+                    response = SetResponse(500, "Status Change Failed!!","","");
+                    return StatusCode(500, response);
+                }
+
+                response = SetResponse(200, "Status Changed Successfully","","");
+                return Ok(response);
             }
-            return NoContent();
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
 
          }
 
          
         [HttpPut("edit/department/{id:int}")]
         [Authorize(Policy = "AdminPolicy")]
-         public async Task<ActionResult> ChangeDepartmentManager(int id, [FromBody] EditDepartmentDTO editDepartmentDTO)
+         public async Task<ActionResult> ChangeEmployeeDepartment(int id, [FromBody] EditDepartmentDTO editDepartmentDTO)
          {
-            var employee  = await _repo.ChangeDepartmentManager(editDepartmentDTO, id);
-            if(employee == null)
+
+            ResponseStatus response;
+            try
             {
-                return NotFound();
+                var employee  = await _repo.ChangeEmployeeDepartment(editDepartmentDTO, id);
+
+                if(employee == null)
+                {
+                    response = SetResponse(500, "Department Change Failed!!","","");
+                    return StatusCode(500, response);
+                }
+
+                response = SetResponse(200, "Department Changed","","");
+                return Ok(response);
             }
-            return NoContent();
+            catch(Exception ex)
+            {
+                response = SetResponse(400, ex.Message,"","");
+                return BadRequest(response);
+            }
 
          }
+
+          /// Method to Set the Response
+        private ResponseStatus SetResponse(int code, string message, string token, string role)
+        {
+            ResponseStatus response = new ResponseStatus()
+            { 
+               StatusCode = code,
+               Message = message,
+               Token = token,
+               Role = role
+            };
+            return response;
+        }
         
     }
 }

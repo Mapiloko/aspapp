@@ -16,6 +16,6 @@ namespace AspApp.Interfaces
         Task<Boolean> AddEmployee(EmployeeCreationDto employee);
         Task<Employee> UpdateEmployee(EmployeeCreationDto employee, int id);
         Task<Employee> ChangeStatus(StatusEditDTO status, int id);
-        Task<Employee> ChangeDepartmentManager(EditDepartmentDTO department, int id);
+        Task<Employee> ChangeEmployeeDepartment(EditDepartmentDTO department, int id);
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AspApp.Migrations
 {
-    public partial class securityMigrations : Migration
+    public partial class securityMigratios : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
