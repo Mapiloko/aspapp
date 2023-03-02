@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using aspapp.DTO;
 using aspapp.DTO.Employee;
+using aspapp.Services;
 using AspApp.Data;
 using AspApp.DTO.Employee;
 using AspApp.Interfaces;
 using AspApp.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspApp.Controllers
@@ -18,17 +20,21 @@ namespace AspApp.Controllers
     public class EmployeeController: ControllerBase
     {
         private readonly IEmployeeRepository _repo;
+        private readonly AuthSecurityService _authservice;
+
 
         private readonly IMapper _mapper;
-        public EmployeeController(IEmployeeRepository repo, IMapper mapper)
+        public EmployeeController(IEmployeeRepository repo, IMapper mapper, AuthSecurityService authservice)
         {
             _mapper = mapper;
             _repo = repo;
+            _authservice = authservice; 
 
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<EmployeeDto>>> Get()
+        [HttpGet("getall")]
+        [Authorize(Policy = "AdminManagerPolicy")]
+        public async Task<ActionResult<List<EmployeeDto>>> GetEmployees()
         {
             var employees =  await _repo.GetEmployees();
             if(employees.Count == 0)
@@ -36,41 +42,46 @@ namespace AspApp.Controllers
                 return NoContent();
             }
             
-            return _mapper.Map<List<EmployeeDto>>(employees);
+            return employees;
         }
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<EmployeeDto>> Get(int id)
+        [HttpGet("getbyid")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
+        public async Task<ActionResult<EmployeeDto>> GetEmployeeById(int id)
         {
-            var employee = await _repo.GetEmployeeById(id); // .Employees.FirstOrDefaultAsync(x => x.Id == id );
+            var employee = await _repo.GetEmployeeById(id); 
             if(employee == null)
             {
                 return NotFound();
             }
-            return _mapper.Map<EmployeeDto>(employee);
+            return employee;
         }
 
-        [HttpPost]
-         public async Task<ActionResult<EmployeeDto>> Post([FromBody] EmployeeCreationDto employeeCreationDto)
+        [HttpPost("create")]
+        [Authorize(Policy = "AdminPolicy")]
+         public async Task<ActionResult<Boolean>> AddEmployee([FromBody] EmployeeCreationDto employeeCreationDto)
          {
-            var employee = _mapper.Map<Employee>(employeeCreationDto);
-            var returnEmployee =  await _repo.AddEmployee(employee);
+            var employeeCreated =  await _repo.AddEmployee(employeeCreationDto);
             
-            return _mapper.Map<EmployeeDto>(returnEmployee);
+            return employeeCreated;
          }
 
-         [HttpPut("{id:int}")]
+         [HttpPut("update/{id:int}")]
+         [Authorize(Policy = "AdminPolicy")]
+
          public async Task<ActionResult> Put(int id, [FromBody] EmployeeCreationDto employeeCreationDto)
          {
-            var employee  = await _repo.EditEmployee(employeeCreationDto, id);
+            var employee  = await _repo.UpdateEmployee(employeeCreationDto, id);
             if(employee == null)
             {
                 return NotFound();
             }
-            return NoContent();
 
+            return NoContent();
          }
 
-         [HttpPut("status/{id:int}")]
+        [HttpPut("update/status/{id:int}")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
+
          public async Task<ActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
             var employee  = await _repo.ChangeStatus(statusEditDTO, id);
@@ -82,19 +93,9 @@ namespace AspApp.Controllers
 
          }
 
-         [HttpPut("editrole/{id:int}")]
-         public async Task<ActionResult> ChangeRole(int id, [FromBody] EditRoleDTO editRoleDTO)
-         {
-            var employee  = await _repo.ChangeRole(editRoleDTO, id);
-            if(employee == null)
-            {
-                return NotFound();
-            }
-            return NoContent();
-
-         }
          
-         [HttpPut("department/{id:int}")]
+        [HttpPut("edit/department/{id:int}")]
+        [Authorize(Policy = "AdminPolicy")]
          public async Task<ActionResult> ChangeDepartmentManager(int id, [FromBody] EditDepartmentDTO editDepartmentDTO)
          {
             var employee  = await _repo.ChangeDepartmentManager(editDepartmentDTO, id);

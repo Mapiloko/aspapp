@@ -9,13 +9,11 @@ namespace AspApp.Models
     public class Department
     {
         public int Id {get; set;}
-        [RequiredAttribute]
-        [StringLength(50)]
         public string? Name {get; set;}
         [RequiredAttribute]
         public string? Status {get; set;}
-        [RequiredAttribute]
-        public int ManagerId {get; set;}
+        // [RequiredAttribute]
+        // public int ManagerId {get; set;}
         public List<Employee>? Employees {get; set;}
 
     }

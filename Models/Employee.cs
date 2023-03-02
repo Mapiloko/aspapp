@@ -18,19 +18,12 @@ namespace AspApp.Models
         [StringLength(50)]
         public string? LastName {get; set;}
 
-        [Phone]
-        [RequiredAttribute]
-        [RegularExpression(@"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$")]
-        public string? Telephone {get; set;}
         [RequiredAttribute]
         [EmailAddress]
         public string? Email {get; set;}
-        [RequiredAttribute]
-        public Boolean IsManager {get; set;} 
+        
         [RequiredAttribute]
         public string? Status {get; set;} 
-        [RequiredAttribute]
-        public string? Password {get; set;} 
         public int DepartmentId {get; set;}
         [ForeignKeyAttribute("DepartmentId")]
         public Department? Department {get; set;}

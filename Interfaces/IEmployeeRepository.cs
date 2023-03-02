@@ -11,12 +11,11 @@ namespace AspApp.Interfaces
 {
     public interface IEmployeeRepository
     {
-        Task<List<Employee>> GetEmployees();
-        Task<Employee> GetEmployeeById(int id);
-        Task<Employee> AddEmployee(Employee employee);
-        Task<Employee> EditEmployee(EmployeeCreationDto employee, int id);
+        Task<List<EmployeeDto>> GetEmployees();
+        Task<EmployeeDto> GetEmployeeById(int id);
+        Task<Boolean> AddEmployee(EmployeeCreationDto employee);
+        Task<Employee> UpdateEmployee(EmployeeCreationDto employee, int id);
         Task<Employee> ChangeStatus(StatusEditDTO status, int id);
         Task<Employee> ChangeDepartmentManager(EditDepartmentDTO department, int id);
-        Task<Employee> ChangeRole(EditRoleDTO role, int id);
     }
 }

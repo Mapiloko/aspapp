@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using aspapp.DTO;
+using AspApp.DTO.Employee;
 
 namespace AspApp.Controllers
 {
@@ -30,8 +31,9 @@ namespace AspApp.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<DepartmentDto>>> Get()
+        [HttpGet("getall")]
+        [Authorize(Policy = "AdminManagerPolicy")]
+        public async Task<ActionResult<List<DepartmentDto>>> GetDepartments()
         {
             var department =  await _repo.GetDepartments();
             if(department.Count == 0)
@@ -39,20 +41,35 @@ namespace AspApp.Controllers
                 return NoContent();
             }
             
-            return _mapper.Map<List<DepartmentDto>>(department);
+            return department;
         }
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<DepartmentDto>> Get(int id)
+
+        [HttpGet("getbymanager/{id:int}")]
+        [Authorize(Policy = "AdminManagerPolicy")]
+        public async Task<ActionResult<EmployeeDto>> GetDepartmentByManager(int id)
+        {
+            var department = await _repo.GetDepartmentManager(id);
+            if(department == null)
+            {
+                return NotFound();
+            }
+            return department;
+        }
+
+        [HttpGet("getbyid/{id:int}")]
+        [Authorize(Policy = "AdminManagerPolicy")]
+        public async Task<ActionResult<DepartmentDto>> GetDepartmentById(int id)
         {
             var department = await _repo.GetDepartmentById(id);
             if(department == null)
             {
                 return NotFound();
             }
-            return _mapper.Map<DepartmentDto>(department);
+            return department;  //  _mapper.Map<DepartmentDto>(department);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
+        [Authorize(Policy = "AdminPolicy")]
          public async Task<ActionResult<DepartmentDto>> Post([FromBody] DepartmentCreationDto departmentCreationDto)
          {
             var department = _mapper.Map<Department>(departmentCreationDto);
@@ -61,7 +78,7 @@ namespace AspApp.Controllers
             return _mapper.Map<DepartmentDto>(returnDepartment);
          }
 
-         [HttpPut("{id:int}")]
+         [HttpPut("update/{id:int}")]
          public async Task<ActionResult> Put(int id, [FromBody] DepartmentCreationDto departmentCreationDto)
          {
             var department  = await _repo.EditDepartment(departmentCreationDto, id);
@@ -72,7 +89,7 @@ namespace AspApp.Controllers
             return NoContent();
          }
 
-         [HttpPut("status/{id:int}")]
+         [HttpPut("update/status/{id:int}")]
          public async Task<ActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
             var department  = await _repo.ChangeStatus(statusEditDTO, id);

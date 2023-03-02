@@ -9,31 +9,77 @@ using Microsoft.EntityFrameworkCore;
 using AspApp.DTO.Department;
 using AutoMapper;
 using aspapp.DTO;
+using AspApp.DTO.Employee;
+using Microsoft.AspNetCore.Identity;
+using aspapp.Services;
 
 namespace AspApp.Services
 {
     public class DepartmentRepository: IDepartmentRepository
     {
         private readonly DatabaseContext _context;
-        public DepartmentRepository(DatabaseContext context )
+        RoleManager<IdentityRole> _roleManager;
+        UserManager<IdentityUser> _userManager;
+        private readonly IMapper _mapper;
+        private readonly AuthSecurityService _authSecurityService;
+        public DepartmentRepository(DatabaseContext context, RoleManager<IdentityRole> roleManager,
+         UserManager<IdentityUser> userManager, IMapper mapper, AuthSecurityService authSecurityService )
         {
             _context = context;
+            _mapper = mapper;
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _authSecurityService = authSecurityService;
         }
-        public async Task<List<Department>> GetDepartments()
+        public async Task<List<DepartmentDto>> GetDepartments()
         {
-            var department =  await _context.Departments.ToListAsync();
-            return department;
+            var departments =  await _context.Departments.ToListAsync();
+            var departmentDtos =  _mapper.Map<List<DepartmentDto>>(departments);
+            foreach (var departmentDto in departmentDtos)
+            {
+                EmployeeDto manager =  await GetDepartmentManager(departmentDto.Id);
+                departmentDto.Manager = manager.FirstName +" "+ manager.LastName;
+            }
+            return departmentDtos;
         }
 
-        public async Task<Department> GetDepartmentById(int id)
+        public async Task<DepartmentDto> GetDepartmentById(int id)
         {
             var department =  await _context.Departments.FirstOrDefaultAsync(x => x.Id == id);
-            return department;
+            DepartmentDto departmentDto = null;
+            
+            if(department != null)
+            {
+                departmentDto =  _mapper.Map<DepartmentDto>(department);
+                EmployeeDto manager =  await GetDepartmentManager(departmentDto.Id);
+                departmentDto.Manager = manager.FirstName +" "+ manager.LastName;
+            }
+
+            return departmentDto;
+        }
+
+        public async Task<EmployeeDto> GetDepartmentManager(int id)
+        {
+            var departmentEmployees =  await _context.Employees.Where(x => x.DepartmentId == id).ToListAsync();
+            EmployeeDto departmentManager  = null;
+
+            foreach (Employee employee in departmentEmployees)
+            {
+                var user = await _userManager.FindByEmailAsync(employee.Email);
+                var roles = await _userManager.GetRolesAsync(user);
+                if(roles[0] == "Manager")
+                {
+                    departmentManager = _mapper.Map<EmployeeDto>(employee);
+                    departmentManager.Telephone = user.PhoneNumber;
+                    departmentManager.Role = roles[0];
+                }
+            } 
+            return departmentManager;
         }
 
         public async Task<Department> AddDepartment(Department department)
         {
-            department.Status = "Active";
+            // department.Status = "Active";
             _context.Add(department);
             await _context.SaveChangesAsync();
 
@@ -45,7 +91,7 @@ namespace AspApp.Services
             if(department != null)
             {
                 department.Name = departmentCreationDto.Name;
-                department.ManagerId = departmentCreationDto.ManagerId;
+                // department.ManagerId = departmentCreationDto.ManagerId;
                 department.Status = departmentCreationDto.Status;
 
                 await _context.SaveChangesAsync();
