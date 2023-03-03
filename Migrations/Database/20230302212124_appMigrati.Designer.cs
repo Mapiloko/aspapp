@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspApp.Migrations.Database
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230302141243_appMigrati")]
+    [Migration("20230302212124_appMigrati")]
     partial class appMigrati
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

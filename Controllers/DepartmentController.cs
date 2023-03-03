@@ -33,12 +33,10 @@ namespace AspApp.Controllers
         }
 
         [HttpGet("getall")]
-        [Authorize(Policy = "AdminManagerPolicy")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
         public async Task<IActionResult> GetDepartments()
         {
             ResponseStatus response;
-            // response = SetResponse(200, "No content","","");
-            // return StatusCode(200, response);
             try
             {
                 var department =  await _repo.GetDepartments();
@@ -57,7 +55,7 @@ namespace AspApp.Controllers
         }
 
         [HttpGet("getbymanager/{id:int}")]
-        [Authorize(Policy = "AdminManagerPolicy")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
         public async Task<IActionResult> GetDepartmentByManager(int id)
         {
             ResponseStatus response;
@@ -86,7 +84,7 @@ namespace AspApp.Controllers
         }
 
         [HttpGet("getbyid/{id:int}")]
-        [Authorize(Policy = "AdminManagerPolicy")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
         public async Task<IActionResult> GetDepartmentById(int id)
         {
             ResponseStatus response;
@@ -115,7 +113,7 @@ namespace AspApp.Controllers
         }
 
         [HttpPost("create")]
-        [Authorize(Policy = "AdminPolicy")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
          public async Task<IActionResult> Post([FromBody] DepartmentCreationDto departmentCreationDto)
          {
             ResponseStatus response;
@@ -140,7 +138,8 @@ namespace AspApp.Controllers
 
          }
 
-         [HttpPut("update/{id:int}")]
+        [HttpPut("update/{id:int}")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
          public async Task<IActionResult> Put(int id, [FromBody] DepartmentCreationDto departmentCreationDto)
          {
             ResponseStatus response;
@@ -170,7 +169,9 @@ namespace AspApp.Controllers
             // return NoContent();
          }
 
-         [HttpPut("update/status/{id:int}")]
+        [HttpPut("update/status/{id:int}")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
+
          public async Task<IActionResult> ChangeStatus(int id, [FromBody] StatusEditDTO statusEditDTO)
          {
             ResponseStatus response;

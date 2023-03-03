@@ -22,51 +22,6 @@ namespace aspapp.Controllers
             authService = service;
         }
 
-        // [Authorize(Policy = "AdminPolicy")]
-        // [Route("get-users")]
-        // [HttpGet]
-        // public async Task<IActionResult> GetUsersAsync()
-        // {
-        //     ResponseStatus response;
-        //     try
-        //     {
-        //         var users = await authService.GetUsersAsync();
-        //         return Ok(users);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         response = SetResponse(400, ex.Message,"", "");
-        //         return BadRequest(response);
-        //     }
-        // }
-        // [Authorize(Policy = "AdminPolicy")]
-        // [Route("create-role")]
-        // [HttpPost]
-        // public async Task<IActionResult> PostRoleAsync(ApplicationRole role)
-        // {
-        //     ResponseStatus response;
-        //     try
-        //     {
-        //         IdentityRole roleInfo = new IdentityRole()
-        //         {
-        //              Name = role.Name,
-        //              NormalizedName = role.NormalizedName
-        //         };
-        //         var res  = await authService.CreateRoleAsync(roleInfo);
-        //         if (!res)
-        //         {
-        //             response = SetResponse(500, "Role Registration Failed","", "");
-        //             return StatusCode(500, response);
-        //         }
-        //         response = SetResponse(200, $"{role.Name} is Created sussessfully","", "");
-        //         return Ok(response);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         response = SetResponse(400, ex.Message,"", "");
-        //         return BadRequest(response);
-        //     }
-        // }
         [Route("register")]
         [HttpPost]
         public async Task<IActionResult> RegisterUserAsync(RegisterUser user)
@@ -89,30 +44,6 @@ namespace aspapp.Controllers
                 return BadRequest(response);
             }
         }
-
-        // [Authorize(Policy = "AdminPolicy")]
-        // [Route("activate-user")]
-        // [HttpPut]
-        // public async Task<IActionResult> ActivateUserAsync(UserRole user)
-        // {
-        //     ResponseStatus response;
-        //     try
-        //     {
-        //         var res = await authService.AssignRoleToUserAsync(user);
-        //         if (!res)
-        //         {
-        //             response = SetResponse(500, "Role is not assigned to user","","");
-        //             return StatusCode(500, response);
-        //         }
-        //         response = SetResponse(200, "Role is sussessfully assigned to user","","");
-        //         return Ok(response);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         response = SetResponse(400, ex.Message,"","");
-        //         return BadRequest(response);
-        //     }
-        // }
 
 
         [Authorize(Policy = "AdminPolicy")]

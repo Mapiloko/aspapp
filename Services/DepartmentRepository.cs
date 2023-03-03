@@ -97,7 +97,6 @@ namespace AspApp.Services
             if(department != null)
             {
                 department.Name = departmentCreationDto.Name;
-                // department.ManagerId = departmentCreationDto.ManagerId;
                 department.Status = departmentCreationDto.Status;
 
                 await _context.SaveChangesAsync();

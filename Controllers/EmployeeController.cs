@@ -34,7 +34,7 @@ namespace AspApp.Controllers
         }
 
         [HttpGet("getall")]
-        [Authorize(Policy = "AdminManagerPolicy")]
+        [Authorize(Policy = "AdminManagerEmployeePolicy")]
         public async Task<ActionResult<List<EmployeeDto>>> GetEmployees()
         {
             ResponseStatus response;
@@ -91,8 +91,8 @@ namespace AspApp.Controllers
 
                 if(!employeeCreated)
                 {
-                    response = SetResponse(500, "Employee Creation Failed","","");
-                    return StatusCode(500, response);
+                    response = SetResponse(205, "User with same username found, use different username","","");
+                    return StatusCode(200, response);
                 }
 
                 response = SetResponse(200, "Employee Created","","");
