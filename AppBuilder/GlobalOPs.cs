@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using aspapp.Data;
+using AspApp.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace aspapp.AppBuilder
@@ -12,7 +12,7 @@ namespace aspapp.AppBuilder
         public static async Task CreateApplicationAdministrator(IServiceProvider serviceProvider)
         {
             var context = serviceProvider
-                .GetRequiredService<RBSAuthDbContext>();
+                .GetRequiredService<DatabaseContext>();
 
             context.Database.EnsureCreated();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

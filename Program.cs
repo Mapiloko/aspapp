@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using aspapp.Data;
 using aspapp.Services;
 using Microsoft.OpenApi.Models;
 using aspapp.AppBuilder;
@@ -17,16 +16,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDbContext<RBSAuthDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RBSAppDbContextConnection")));
-
 
 builder.Services.AddCors();
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<AuthSecurityService>();
-// builder.Services.AddScoped<OrdersService>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
@@ -43,7 +38,7 @@ builder.Services.Configure<IdentityOptions>(opts =>
 });
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-        .AddEntityFrameworkStores<RBSAuthDbContext>()
+        .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
 
 // Read the Secret Key from the appsettings.json
