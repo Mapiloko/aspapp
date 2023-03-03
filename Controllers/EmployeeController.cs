@@ -38,21 +38,21 @@ namespace AspApp.Controllers
         public async Task<ActionResult<List<EmployeeDto>>> GetEmployees()
         {
             ResponseStatus response;
-            // response = SetResponse(200, "No content","","");
+            // response = SetResponse(200, "No content");
             //         return StatusCode(200, response);
             try
             {
                 var employees =  await _repo.GetEmployees();
                 if(employees.Count == 0)
                 {
-                    response = SetResponse(200, "No content","","");
+                    response = SetResponse(200, "No content");
                     return StatusCode(200, response);
                 }
                 return Ok(employees);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
         }
@@ -74,7 +74,7 @@ namespace AspApp.Controllers
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
@@ -91,16 +91,16 @@ namespace AspApp.Controllers
 
                 if(!employeeCreated)
                 {
-                    response = SetResponse(205, "User with same username found, use different username","","");
+                    response = SetResponse(205, "User with same username found, use different username");
                     return StatusCode(200, response);
                 }
 
-                response = SetResponse(200, "Employee Created","","");
+                response = SetResponse(200, "Employee Created");
                 return Ok(response);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
@@ -119,16 +119,16 @@ namespace AspApp.Controllers
 
                 if(employee == null)
                 {
-                    response = SetResponse(500, "Emplyee Update Failed!!","","");
+                    response = SetResponse(500, "Emplyee Update Failed!!");
                     return StatusCode(500, response);
                 }
 
-                response = SetResponse(200, "Employee Updated Successfully","","");
+                response = SetResponse(200, "Employee Updated Successfully");
                 return Ok(response);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
          }
@@ -145,16 +145,16 @@ namespace AspApp.Controllers
 
                 if(employee == null)
                 {
-                    response = SetResponse(500, "Status Change Failed!!","","");
+                    response = SetResponse(500, "Status Change Failed!!");
                     return StatusCode(500, response);
                 }
 
-                response = SetResponse(200, "Status Changed Successfully","","");
+                response = SetResponse(200, "Status Changed Successfully");
                 return Ok(response);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
@@ -173,30 +173,28 @@ namespace AspApp.Controllers
 
                 if(employee == null)
                 {
-                    response = SetResponse(500, "Department Change Failed!!","","");
+                    response = SetResponse(500, "Department Change Failed!!");
                     return StatusCode(500, response);
                 }
 
-                response = SetResponse(200, "Department Changed","","");
+                response = SetResponse(200, "Department Changed");
                 return Ok(response);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
          }
 
           /// Method to Set the Response
-        private ResponseStatus SetResponse(int code, string message, string token, string role)
+        private ResponseStatus SetResponse(int code, string message)
         {
             ResponseStatus response = new ResponseStatus()
             { 
                StatusCode = code,
-               Message = message,
-               Token = token,
-               Role = role
+               Message = message
             };
             return response;
         }

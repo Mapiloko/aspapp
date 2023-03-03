@@ -26,7 +26,7 @@ namespace aspapp.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterUserAsync(RegisterUser user)
         {
-            ResponseStatus response;
+            AuthResponseStatus response;
             try
             {
                 var res = await authService.RegisterUserAsync(user);
@@ -52,7 +52,7 @@ namespace aspapp.Controllers
 
         public async Task<IActionResult> ChangeRole(UserRole user)
         {
-            ResponseStatus response;
+            AuthResponseStatus response;
             try
             {
                 var res = await authService.ChangeRole(user);
@@ -77,7 +77,7 @@ namespace aspapp.Controllers
 
         public async Task<IActionResult> UpdateUser(UserUpdate updateUser)
         {
-            ResponseStatus response;
+            AuthResponseStatus response;
             try
             {
                 var res = await authService.UpdateUser(updateUser);
@@ -100,7 +100,7 @@ namespace aspapp.Controllers
         [HttpPost]
         public async Task<IActionResult> AuthUserAsync(LoginUser user)
         {
-            ResponseStatus response = new ResponseStatus();
+            AuthResponseStatus response = new AuthResponseStatus();
             try
             {
                 var res = await authService.AuthUserAsync(user);
@@ -134,9 +134,9 @@ namespace aspapp.Controllers
         }
 
         /// Method to Set the Response
-        private ResponseStatus SetResponse(int code, string message, string token, string role)
+        private AuthResponseStatus SetResponse(int code, string message, string token, string role)
         {
-            ResponseStatus response = new ResponseStatus()
+            AuthResponseStatus response = new AuthResponseStatus()
             { 
                StatusCode = code,
                Message = message,

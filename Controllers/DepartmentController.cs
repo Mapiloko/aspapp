@@ -42,14 +42,14 @@ namespace AspApp.Controllers
                 var department =  await _repo.GetDepartments();
                 if (department.Count == 0)
                 {
-                    response = SetResponse(200, "No content","","");
+                    response = SetResponse(200, "No content");
                     return StatusCode(200, response);
                 }
                 return Ok(department);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
         }
@@ -64,14 +64,14 @@ namespace AspApp.Controllers
                 var department = await _repo.GetDepartmentManager(id);
                 if(department == null)
                 {
-                    response = SetResponse(500, "Department Not Found","","");
+                    response = SetResponse(500, "Department Not Found");
                     return StatusCode(500, response);
                 }
                 return Ok(department);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
@@ -93,14 +93,14 @@ namespace AspApp.Controllers
                 var department = await _repo.GetDepartmentById(id);
                 if(department == null)
                 {
-                    response = SetResponse(500, "Department Not Found","","");
+                    response = SetResponse(500, "Department Not Found");
                     return StatusCode(500, response);
                 }
                 return Ok(department);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
             
@@ -123,16 +123,16 @@ namespace AspApp.Controllers
                 var returndpt =  await _repo.AddDepartment(department);
                 if(returndpt == null)
                 {
-                    response = SetResponse(500, "Failed to Create new Department","","");
+                    response = SetResponse(500, "Failed to Create new Department");
                     return StatusCode(500, response);
                 }
 
-                response = SetResponse(200, "Department Created","","");
+                response = SetResponse(200, "Department Created");
                 return Ok(returndpt);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
@@ -148,16 +148,16 @@ namespace AspApp.Controllers
                 var department  = await _repo.EditDepartment(departmentCreationDto, id);
                 if(department == null)
                 {
-                    response = SetResponse(500, "Department Not Found","","");
+                    response = SetResponse(500, "Department Not Found");
                     return StatusCode(500, response);
                 }
-                response = SetResponse(200, "Department Updated","","");
+                response = SetResponse(200, "Department Updated");
                 return Ok(response);
 
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
@@ -180,15 +180,15 @@ namespace AspApp.Controllers
                 var department  = await _repo.ChangeStatus(statusEditDTO, id);
                 if(department == null)
                 {
-                    response = SetResponse(500, "Department Not Found","","");
+                    response = SetResponse(500, "Department Not Found");
                     return StatusCode(500, response);
                 }
-                response = SetResponse(200, "Department Status Chnaged","","");
+                response = SetResponse(200, "Department Status Chnaged");
                 return Ok(response);
             }
             catch(Exception ex)
             {
-                response = SetResponse(400, ex.Message,"","");
+                response = SetResponse(400, ex.Message);
                 return BadRequest(response);
             }
 
@@ -200,14 +200,12 @@ namespace AspApp.Controllers
             // return NoContent();
          }
 
-        private ResponseStatus SetResponse(int code, string message, string token, string role)
+        private ResponseStatus SetResponse(int code, string message)
         {
             ResponseStatus response = new ResponseStatus()
             { 
                StatusCode = code,
-               Message = message,
-               Token = token,
-               Role = role
+               Message = message
             };
             return response;
         }
