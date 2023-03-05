@@ -113,7 +113,7 @@ namespace AspApp.Controllers
         }
 
         [HttpPost("create")]
-        [Authorize(Policy = "AdminManagerEmployeePolicy")]
+        [Authorize(Policy = "AdminPolicy")]
          public async Task<IActionResult> Post([FromBody] DepartmentCreationDto departmentCreationDto)
          {
             ResponseStatus response;

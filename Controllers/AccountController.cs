@@ -107,7 +107,7 @@ namespace aspapp.Controllers
                 if (res.LoginStatus == LoginStatus.LoginFailed)
                 {
                     response = SetResponse(401,"UserName or Password is not found", "","");
-                    return Unauthorized(response);
+                    return StatusCode(200,response);
                 }
                 if (res.LoginStatus == LoginStatus.NoRoleToUser)
                 {
